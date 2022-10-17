@@ -20,6 +20,10 @@ class Store(object):
         details = request_json(self.urls.info_url(), store_id=self.id)
         return details
 
+    def details_str(self):
+        details = self.get_details()
+        return f"{details['StreetName']}, {details['City']} ({details['Phone']})"
+
     def get_menu(self, lang="en"):
         response = request_json(self.urls.menu_url(), store_id=self.id, lang=lang)
         menu = Menu.from_menu_dict(menu_data=response, country=self.country)

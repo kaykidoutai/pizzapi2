@@ -27,6 +27,9 @@ class Address(object):
         self.urls = Urls(country)
         self.country = country
 
+    def __str__(self):
+        return f"{self.street}, {self.city} {self.region} {self.zip}"
+
     @property
     def data(self):
         return {
@@ -44,7 +47,7 @@ class Address(object):
     def line2(self):
         return "{City}, {Region}, {PostalCode}".format(**self.data)
 
-    def nearby_stores(self, service="Delivery", ignore_closed=True):
+    def nearby_stores(self, service="Delivery", ignore_closed=False):
         """Query the API to find nearby stores.
 
         nearby_stores will filter the information we receive from the API
@@ -63,8 +66,8 @@ class Address(object):
         else:
             return [Store(x, self.country) for x in data["Stores"]]
 
-    def closest_store(self, service="Delivery"):
-        stores = self.nearby_stores(service=service)
+    def closest_store(self, service="Delivery", ignore_closed: bool = False):
+        stores = self.nearby_stores(service=service, ignore_closed=ignore_closed)
         if not stores:
             raise Exception("No local stores are currently open")
         return stores[0]

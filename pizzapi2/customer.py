@@ -10,3 +10,6 @@ class Customer(object):
         self.last_name = lname.strip()
         self.email = email.strip()
         self.phone = str(phone).strip()
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}. Email: {self.email}, Phone: {self.phone}"

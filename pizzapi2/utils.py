@@ -25,3 +25,7 @@ def request_xml(url, **kwargs):
     r = requests.get(url.format(**kwargs))
     r.raise_for_status()
     return xmltodict.parse(r.text)
+
+
+def yesno() -> bool:
+    return "y" in input("y/n").casefold()
